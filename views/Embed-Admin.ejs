@@ -1,0 +1,59 @@
+<%- include('includes/head') %>
+
+	<div class="wrapper">
+		<%- include('includes/sidebar') %>
+
+		<div class="main">
+			<%- include('includes/header') %>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3"><% type%> Admin</h1>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-12 col-lg-12 col-xxl-12 d-flex p-0">
+											<div class="card flex-fill">
+												<div class="card-header">
+													
+													<div class="card-body">
+														<form action="/addadmin" method="POST">
+															<div class="mb-3">
+															  <label for="name" class="form-label">Name</label>
+															  <input type="text" class="form-control" id="name" name="name" value="" placeholder="Enter name">
+															</div>
+															<div class="mb-3">
+															  <label for="email" class="form-label">Email</label>
+															  <input type="email" class="form-control" id="email" name="email" value="" placeholder="Enter email">
+															</div>
+															<div class="mb-3">
+															  <label for="role" class="form-label">Role</label>
+															  <select class="form-select" id="role" name="role">
+																<% roles.forEach(role => { %>
+																  <option value="<%= role._id %>"><%= role.name %></option>
+																<% }); %>
+															  </select>
+															</div>
+															<button type="submit" class="btn btn-primary text-end">Save Changes</button>
+														  </form>
+														  
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+			<%- include('includes/footer') %>

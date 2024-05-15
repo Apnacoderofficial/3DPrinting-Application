@@ -1,0 +1,69 @@
+<nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="index.html">
+  <span class="align-middle">3D Printing</span>
+</a>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Pages
+            </li>
+
+            <li class="sidebar-item active">
+                <a class="sidebar-link" href="index">
+      <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+    </a>
+            </li>					
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="stlFiles">
+                <i class="align-middle" data-feather="book"></i> <span class="align-middle">STL Files </span>
+                </a>
+            </li>
+            
+         <% if(session.user.role == "66264859c4263172c1bef475") {%>
+         <li class="sidebar-header">
+          Administrator Section
+      </li>
+      <!-- <li class="sidebar-item">
+          <a class="sidebar-link" href="profile">
+              <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+              </a>
+      </li> -->
+      <li class="sidebar-item">
+          <a class="sidebar-link" href="adminlist">
+              <i class="align-middle" data-feather="users"></i> <span class="align-middle">Admin List</span>
+              </a>
+      </li>
+      <li class="sidebar-item">
+          <a class="sidebar-link" href="adminrole">
+              <i class="align-middle" data-feather="toggle-right"></i> <span class="align-middle">Admin Role</span>
+              </a>
+      </li>
+         <% } %>
+            <!-- <li class="sidebar-header">
+                Mail Section
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="adminrole">
+                    <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Manage Email</span>
+                    </a>
+            </li> -->
+            <!-- <li class="sidebar-header">
+                Settings Section
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="adminrole">
+                    <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Settings and Privacy</span>
+                    </a>
+            </li> -->
+            <li class="sidebar-header">
+                Other
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="logout">
+      <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Logout</span>
+    </a>
+            </li>
+        </ul>
+    </div>
+</nav>

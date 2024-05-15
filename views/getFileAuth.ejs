@@ -1,0 +1,49 @@
+<%- include('includes/head') %>
+
+	<div class="wrapper">
+		<%- include('includes/sidebar') %>
+		<div class="main">
+			<%- include('includes/header') %>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3 text-Uppercase">File Auth</h1>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-12 col-lg-12 col-xxl-12 d-flex p-0">
+											<div class="card flex-fill">
+												<div class="card-header">
+													
+													<div class="card-body">
+														<form action="/postFileAuth" method="POST" autocomplete="off">
+															<!-- <div class="mb-3">
+															  <label for="bodyToken" class="form-label">License Key</label>
+															  <input type="text" class="form-control" id="bodyToken" name="bodyToken" value="" placeholder="Enter License Key">
+                                                              <input type="hidden" name="id" value="<%= typeof existingFileData == 'undefined' ? '' : existingFileData._id %>">
+															  <small>*Your license key has been sent to your email address.<a href="https://wa.me/+917007564392" >Request to Support Team</a></small>
+															</div> -->
+                                                            <div class="col-md-12 mt-2">
+																<button type="submit" class="btn btn-primary me-2">Save</button>
+																<button type="reset" class="btn btn-secondary">Reset</button>
+                                                            </div>
+														  </form>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+
+				</div>
+			</main>
+			<%- include('includes/footer') %>

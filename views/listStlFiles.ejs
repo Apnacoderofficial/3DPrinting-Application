@@ -1,0 +1,107 @@
+<%- include('includes/head') %>
+
+	<div class="wrapper">
+		<%- include('includes/sidebar') %>
+
+		<div class="main">
+			<%- include('includes/header') %>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<h1 class="h3 mb-3">STL File List</h1>
+						<div class="text-end">
+							<a class="btn btn-primary" href="addStlFile">Add File</a>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+											<div class="card flex-fill">
+												<div class="card-header">
+													
+												</div>
+												<table class="table table-hover my-0">
+													<thead>
+														<tr>
+															<th>Client Name</th>
+															<th class="d-none d-xl-table-cell">Client Email</th>
+															<th class="d-none d-xl-table-cell">File Name</th>
+															<% if(session.user.role == "66264859c4263172c1bef475") {%>
+															<th class="d-none d-xl-table-cell">Allowed View Count</th>
+															<% } %>
+															<th class="d-none d-xl-table-cell">Client Viewed Count</th>
+															<th>Status</th>
+															<th>Created At</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<tbody>
+														<% existingFileList.forEach(entry => { %>
+															<tr>
+																<td class="d-none d-xl-table-cell"><%= entry.userName %></td>
+																<td class="d-none d-xl-table-cell"><%= entry.userEmail %></td>
+																<td class="d-none d-xl-table-cell"><%= entry.stlFileName %></td>
+																<% if(session.user.role == "66264859c4263172c1bef475") {%>
+																<td class="d-none d-xl-table-cell"><%= entry.allowedViewCount %></td>
+																<% } %>
+																<td class="d-none d-xl-table-cell"><%= entry.urlHitCount %></td>
+																<td class="d-none d-xl-table-cell">
+																	<span class="btn <%= (entry.status === 'Active') ? 'btn-success' : 'btn-danger' %>">
+																	  <%= entry.status %>
+																	</span>
+																  </td>
+																  
+																<td class="d-none d-xl-table-cell"><%= entry.timestamps %></td>
+																<td>
+																	<% if(session.user.role != "66264859c4263172c1bef475") {%>
+																		<% if (entry.status === "Inactive" || entry.urlHitCount === entry.allowedViewCount) { %>
+																			No Access
+																			<% }else{%>
+																				<a href="getFileAuth?id=<%= entry.id %>" class="btn btn-primary" title="Edit" data-toggle="modal" data-target="#exampleModal" >
+																					<i class="align-middle" data-feather="eye"></i>
+																				</a>
+																			<% } %>
+																		
+																		
+																		
+																	<% }else{ %>
+																		
+																		<form action="/postFileAuth" method="post">
+																			<input name="bodyToken" value="<%= entry.token ? entry.token : '' %>" hidden>
+																			<input name="id" value="<%= entry._id ? entry._id : '' %>" hidden>
+																			<button type="submit" class="btn btn-primary"><i class="align-middle" data-feather="eye"></i></button>
+																		</form>
+																		<a href="editStlFile?id=<%= entry._id %>" class="btn btn-warning" title="Edit">
+																			<i class="align-middle" data-feather="edit"></i>
+																		</a>
+																		<br>
+																		<a href="deleteStlFile/<%= entry._id %>"
+																			class="btn btn-danger"
+																			title="Delete"
+																			onclick="return confirm('Are you sure you want to delete this admin?');">
+																			<i class="align-middle" data-feather="trash"></i>
+																		 </a>
+																	<% } %>
+																	 
+																</td>
+															</tr>
+														<% }); %>
+													</tbody>
+												</table>
+											</div>
+										</div>	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+			<%- include('includes/footer') %>
