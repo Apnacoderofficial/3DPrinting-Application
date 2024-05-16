@@ -62,6 +62,12 @@ if exist "%GIT_INSTALL_DIR%\bin\git.exe" (
 REM Clean up
 del git_installer.exe
 
+echo.
+echo Creating Folder 3DPrinting ......
+
+mkdir "C:\3DPrinting"
+echo Folder created successfully!
+
 REM Clone a Git repository
 echo.
 echo Cloning a Git repository...
