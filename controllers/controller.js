@@ -919,7 +919,7 @@ async function hideFile(filePath) {
   });
 }
 async function launch3DSprint(localFilePath) {
-  const executablePath = 'C:\\Program Files\\3D Systems\\3D Sprint 5.1.0.1037\\3DSprint.exe';
+  const executablePath = 'C:\\Program Files\\3D Systems\\3D Sprint 5.4.0.1026\\3DSprint.exe';
   const command = `"${executablePath}" "${localFilePath}"`;
 
   try {
