@@ -1,0 +1,67 @@
+<%- include('includes/head') %>
+
+	<div class="wrapper">
+		<%- include('includes/sidebar') %>
+
+		<div class="main">
+			<%- include('includes/header') %>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3"><% type%> Admin</h1>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-12 col-lg-12 col-xxl-12 d-flex p-0">
+											<div class="card flex-fill">
+												<div class="card-header">
+													
+													<div class="card-body">
+														<form action="<%= type === 'edit' ? `/editadmin?id=${user._id}` : '/addadmin' %>" method="post">
+															<div class="mb-3">
+															  <label for="name" class="form-label">Name</label>
+															  <input type="text" class="form-control" value="<%= (user.name)?user.name:'' %>" id="name" name="name" placeholder="Enter name">
+															</div>
+															<div class="mb-3">
+															  <label for="email" class="form-label">Email</label>
+															  <input type="email" class="form-control" id="email" name="email" value="<%= (user.email)?user.email:'' %>" placeholder="Enter email">
+															</div>
+															<% if(type != 'edit'){ %>
+																<div class="mb-3">
+																	<label for="email" class="form-label">Password</label>
+																	<input type="password" class="form-control" id="Password" name="password" value="" placeholder="Enter Password">
+																  </div>
+															<% } %>
+															<div class="mb-3">
+															  <label for="role" class="form-label">Role</label>
+															  <select class="form-select" id="role" name="role">
+																<% roles.forEach(role => { %>
+																  <option value="<%= role._id %>" <%= (user && user.role && user.role.toString() === role._id.toString()) ? 'selected' : '' %>><%= role.name %></option>
+																<% }); %>
+															  </select>
+															  
+															  
+															</div>
+															<button type="submit" class="btn btn-primary text-end">Save Changes</button>
+														  </form>
+														  
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+			<%- include('includes/footer') %>
