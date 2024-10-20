@@ -1,0 +1,92 @@
+<%- include('includes/head') %>
+	<div class="wrapper">
+		<%- include('includes/sidebar') %>
+
+		<div class="main">
+			<%- include('includes/header') %>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<h1 class="h3">Admin List</h1>
+						<div class="text-end">
+							<a class="btn btn-primary" href="addadmin">Add Admin/User</a>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+											<div class="flex-fill table-responsive">
+												<div class="card-header">
+				
+													<!-- <h5 class="card-title mb-0">Latest Projects</h5> -->
+												</div>
+												<table class="table table-hover my-0">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Email</th>
+															<th>Role</th>
+															<th class="d-none d-xl-table-cell">Created Date</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<tbody>
+														<% users.forEach(user => { %>
+															<tr>
+																<td><%= user.name %></td>
+																<td><%= user.email %></td>
+																
+																<td>
+																	<% roles.forEach(role => { %>
+																		<% if (user.role == role._id) { %>
+																			<span class="badge bg-danger"><%= role.name %></span>
+																		<% } %>
+																	<% }); %>
+																</td>
+																<td class="d-none d-xl-table-cell"><%= user.timestamps %></td>
+																<td>
+																	<% if(user._id != "662647dbc4263172c1bef474") {%>
+																	<a href="editadmin?id=<%= user._id %>" class="btn btn-warning" title="Edit">
+																		<i class="align-middle" data-feather="edit"></i>
+																	</a>
+																	<a href="deleteadmin/<%= user._id %>"
+																		class="btn btn-danger"
+																		title="Delete"
+																		onclick="return confirm('Are you sure you want to delete?');">
+																		<i class="align-middle" data-feather="trash"></i>
+																	 </a>
+																	 <% } %>
+																</td>
+															</tr>
+														<% }); %>
+														
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+			<%- include('includes/footer') %>
+		</div>
+	</div>
+
+	
+
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="index.html">
+            <span class="align-middle">3D Printing</span>
+        </a>
+
+        <ul class="sidebar-nav">
+
+            <li class="sidebar-item active">
+                <a class="sidebar-link" href="index">
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                </a>
+            </li>
+
+
+            <!-- Files Setions -->
+            <% if (session.user.version != null) { %> 
+            <li class="sidebar-header">
+                Files Section
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="stlFiles">
+                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">STL Files </span>
+                </a>
+            </li>
+            <% } %>
+
+            <!-- Administrator Section -->
+
+            <% if(session.user.role == "66264859c4263172c1bef475") {%>
+            <li class="sidebar-header">
+                Administrator Section
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="adminlist">
+                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Admin List</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="adminrole">
+                    <i class="align-middle" data-feather="toggle-right"></i> <span class="align-middle">Admin
+                        Role</span>
+                    </a>
+                </li>
+            <% } %>
+
+
+            <!-- Settings -->
+
+            <li class="sidebar-header">
+                Settings Section
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/settings">
+                    <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Settings</span>
+                </a>
+            </li>
+
+            <!-- Settings -->
+
+            <li class="sidebar-header">
+                Instruction Section
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/setup-version">
+                    <i class="align-middle" data-feather="file"></i> <span class="align-middle">How to Setup version?</span>
+                </a>
+            </li>
+
+
+            <!-- other -->
+            
+            <li class="sidebar-header">
+                <hr>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="logout">
+                    <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

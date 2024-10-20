@@ -1,0 +1,93 @@
+<%- include('includes/head') %>
+
+	<div class="wrapper">
+		<%- include('includes/sidebar') %>
+
+		<div class="main">
+			<%- include('includes/header') %>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3"><%= type %> File Entry</h1>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="row">
+										<div class="col-12 col-lg-12 col-xxl-12 d-flex p-0">
+											<div class="card flex-fill">
+												<div class="card-header">													
+													<div class="card-body">
+														<form action="/saveStlFile" method="POST" enctype="multipart/form-data" autocomplete="off">
+															<input type="hidden" name="id" value="<%= typeof existingFileData == 'undefined' ? '' : existingFileData._id %>">
+															<!-- <input type="hidden" name="fileId" value="<%= typeof existingFileData == 'undefined' ? '' : existingFileData.fileId %>"> -->
+															<!-- <input type="hidden" name="publicUrls" value="<%= typeof existingFileData == 'undefined' ? '' : existingFileData.publicUrls %>"> -->
+
+															<!-- <div class="mb-3">
+															  <label for="userName" class="form-label">Client Name</label>
+															  <input type="text" class="form-control" id="userName" name="userName" value="<%- typeof existingFileData != 'undefined' ? existingFileData.userName : '' %>" required placeholder="Enter name">
+															</div> -->
+															<div class="mb-3">
+															  <label for="userEmail" class="form-label">Client Email</label>
+															  <select class="form-control" id="userEmail" name="userEmail" placeholder="Enter email" required >
+																<% users.forEach(data => { %>
+																	<% if(data.role != "66264859c4263172c1bef475"){ %>
+																		<option value="<%= data.email %>" <% if(type == 'edit'){existingFileData === data.email ? 'selected' : ''} %>><%= data.name %> - <%= data.email %></option>
+																	<% } %>
+																<% }); %>
+															</select>
+															
+															
+															</div>
+															<div class="mb-3">
+																<label for="allowedViewCount" class="form-label">Allowed View Count</label>
+																<input type="number" class="form-control" id="allowedViewCount" name="allowedViewCount" value="<%- typeof existingFileData != 'undefined' ? existingFileData.allowedViewCount : '' %>" min="1" onpaste="return false" required placeholder="Enter count">
+															</div>
+															<div class="mb-3">
+																<label for="stlFile" class="form-label">Upload Stl File</label>
+																<input type="file" class="form-control" id="stlFile" name="stlFile" accept=".stl" <%= typeof existingFileData != 'undefined' ? '' : 'required' %> placeholder="Upload Stl File" onchange="validateFile()">
+																<div id="error-message" style="color: red; display: none;">Please upload only STL File!</div>
+																<input type="hidden" value="<%- typeof existingFileData != 'undefined' ? existingFileData.stlFile : '' %>" name="stlFileName"> 
+																<p><%- typeof existingFileData != 'undefined' ? existingFileData.stlFile : '' %></p>
+															</div>
+															<div class="col-md-12 mt-2">
+																<button type="submit" class="btn btn-primary me-2">Save</button>
+																<button type="reset" class="btn btn-secondary">Reset</button>
+															  </div>
+														  </form>														  
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+<%- include('includes/footer') %>
+<script>
+	function validateFile() {
+		const fileInput = document.getElementById('stlFile');
+		const errorMessage = document.getElementById('error-message');
+		const allowedExtensions = /(\.stl)$/i;
+
+		// Check if any file is selected
+		if (fileInput.files.length > 0) {
+			const fileName = fileInput.files[0].name;
+
+			// Check if the file extension is not .stl
+			if (!allowedExtensions.exec(fileName)) {
+				errorMessage.style.display = 'block';
+				fileInput.value = ''; // Clear the file input
+			} else {
+				errorMessage.style.display = 'none';
+			}
+		}
+	}
+</script>			
