@@ -66,108 +66,108 @@ const path = require('path');
 // };
 
 
-const apikeys = require('../config/apikeys.json');
-const SCOPE = ['https://www.googleapis.com/auth/drive'];
-async function authorize(){
-  const jwtClient = new google.auth.JWT(
-      apikeys.client_email,
-      null,
-      apikeys.private_key,
-      SCOPE
-  );
+// const apikeys = require('../config/apikeys.json');
+// const SCOPE = ['https://www.googleapis.com/auth/drive'];
+// async function authorize(){
+//   const jwtClient = new google.auth.JWT(
+//       apikeys.client_email,
+//       null,
+//       apikeys.private_key,
+//       SCOPE
+//   );
 
-  await jwtClient.authorize();
+//   await jwtClient.authorize();
 
-  return jwtClient;
-}
+//   return jwtClient;
+// }
 
 
-const uploadFileToDrive = async (authClient, file) => {
-  try {
-    const filePath = file.path; // Path of the uploaded file
-    const folderName = '3D PRINTING'; // Desired folder name
+// const uploadFileToDrive = async (authClient, file) => {
+//   try {
+//     const filePath = file.path; // Path of the uploaded file
+//     const folderName = '3D PRINTING'; // Desired folder name
 
-    // Initialize Google Drive
-    const drive = google.drive({
-      version: 'v3',
-      auth: authClient
-    });
+//     // Initialize Google Drive
+//     const drive = google.drive({
+//       version: 'v3',
+//       auth: authClient
+//     });
 
-    // Check if the folder already exists
-    const folderResponse = await drive.files.list({
-      q: `mimeType = 'application/vnd.google-apps.folder' and name = '${folderName}' and trashed = false`,
-      fields: 'files(id, name)',
-      spaces: 'drive'
-    });
+//     // Check if the folder already exists
+//     const folderResponse = await drive.files.list({
+//       q: `mimeType = 'application/vnd.google-apps.folder' and name = '${folderName}' and trashed = false`,
+//       fields: 'files(id, name)',
+//       spaces: 'drive'
+//     });
 
-    let folderId;
+//     let folderId;
 
-    // If folder exists, use its ID, else create a new one
-    if (folderResponse.data.files.length) {
-      folderId = folderResponse.data.files[0].id;
-      console.log(`Folder "${folderName}" already exists with ID: ${folderId}`);
-    } else {
-      // Create the folder in the root directory
-      const folderCreationResponse = await drive.files.create({
-        requestBody: {
-          name: folderName,
-          mimeType: 'application/vnd.google-apps.folder',
-        },
-        fields: 'id'
-      });
-      folderId = folderCreationResponse.data.id;
-      console.log(`Folder "${folderName}" created with ID: ${folderId}`);
-    }
+//     // If folder exists, use its ID, else create a new one
+//     if (folderResponse.data.files.length) {
+//       folderId = folderResponse.data.files[0].id;
+//       console.log(`Folder "${folderName}" already exists with ID: ${folderId}`);
+//     } else {
+//       // Create the folder in the root directory
+//       const folderCreationResponse = await drive.files.create({
+//         requestBody: {
+//           name: folderName,
+//           mimeType: 'application/vnd.google-apps.folder',
+//         },
+//         fields: 'id'
+//       });
+//       folderId = folderCreationResponse.data.id;
+//       console.log(`Folder "${folderName}" created with ID: ${folderId}`);
+//     }
 
-    // Upload the file to the created or found folder
-    const response = await drive.files.create({
-      requestBody: {
-        name: file.originalname, // Use original filename for Google Drive
-        mimeType: file.mimetype,
-        parents: [folderId] // Set the folder ID
-      },
-      media: {
-        mimeType: file.mimetype,
-        body: fs.createReadStream(filePath),
-      },
-    });
+//     // Upload the file to the created or found folder
+//     const response = await drive.files.create({
+//       requestBody: {
+//         name: file.originalname, // Use original filename for Google Drive
+//         mimeType: file.mimetype,
+//         parents: [folderId] // Set the folder ID
+//       },
+//       media: {
+//         mimeType: file.mimetype,
+//         body: fs.createReadStream(filePath),
+//       },
+//     });
 
-    // Delete the uploaded file from the server
-    fs.unlinkSync(filePath);
+//     // Delete the uploaded file from the server
+//     fs.unlinkSync(filePath);
 
-    console.log('File uploaded to Google Drive:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error uploading file to Google Drive:', error);
-    throw new Error('An error occurred while uploading the file to Google Drive.');
-  }
-};
+//     console.log('File uploaded to Google Drive:', response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error uploading file to Google Drive:', error);
+//     throw new Error('An error occurred while uploading the file to Google Drive.');
+//   }
+// };
 
-const generatePublicUrl = async (fileId,authClient) => {
-  try {
-    const drive = google.drive({ version: 'v3', auth: authClient });
-    // Grant read permission to anyone for the file
-    await drive.permissions.create({
-      fileId: fileId,
-      requestBody: {
-        role: 'reader',
-        type: 'anyone',
-      },
-    });
+// const generatePublicUrl = async (fileId,authClient) => {
+//   try {
+//     const drive = google.drive({ version: 'v3', auth: authClient });
+//     // Grant read permission to anyone for the file
+//     await drive.permissions.create({
+//       fileId: fileId,
+//       requestBody: {
+//         role: 'reader',
+//         type: 'anyone',
+//       },
+//     });
 
-    // Retrieve web view link and direct download link for the file
-    const result = await drive.files.get({
-      fileId: fileId,
-      fields: 'webContentLink',
-    });
+//     // Retrieve web view link and direct download link for the file
+//     const result = await drive.files.get({
+//       fileId: fileId,
+//       fields: 'webContentLink',
+//     });
 
-    const { webContentLink } = result.data;
-    return {webContentLink };
-  } catch (error) {
-    console.error('Error generating public URL:', error);
-    throw error;
-  }
-};
+//     const { webContentLink } = result.data;
+//     return {webContentLink };
+//   } catch (error) {
+//     console.error('Error generating public URL:', error);
+//     throw error;
+//   }
+// };
 
 
 
@@ -871,7 +871,7 @@ exports.postFileAuth = async (req, res) => {
     existingFileData.urlHitCount += 1;
     await existingFileData.save();
     const baseUrl = req.protocol + '://' + req.get('host');
-    openSTLFileIn3DSprint(`${existingFileData.stlFile}`);
+    openSTLFileIn3DSprint(`http://64.227.151.117:1234/uploads/${existingFileData.stlFile}`);
     return res.redirect('/stlFiles');
 
   } catch (error) {
@@ -887,6 +887,7 @@ const fs = require('fs');
 const puppeteer = require('puppeteer');
 
 async function openSTLFileIn3DSprint(file) {
+  console.log(file);
   const stlFileUrl = file;
   const userSpecificFolderPath = 'C:/3DPrinting';
   const currentDate = new Date();
