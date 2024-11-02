@@ -871,7 +871,7 @@ exports.postFileAuth = async (req, res) => {
     existingFileData.urlHitCount += 1;
     await existingFileData.save();
     const baseUrl = req.protocol + '://' + req.get('host');
-    openSTLFileIn3DSprint(`http://64.227.151.117:1234/uploads/${existingFileData.stlFile}`);
+    openSTLFileIn3DSprint(`http://165.232.155.106:1234/uploads/${existingFileData.stlFile}`,req.session.version);
     return res.redirect('/stlFiles');
 
   } catch (error) {
@@ -886,7 +886,7 @@ const fs = require('fs');
 // const path = require('path');
 const puppeteer = require('puppeteer');
 
-async function openSTLFileIn3DSprint(file) {
+async function openSTLFileIn3DSprint(file,version) {
   console.log(file);
   const stlFileUrl = file;
   const userSpecificFolderPath = 'C:/3DPrinting';
@@ -920,7 +920,7 @@ async function openSTLFileIn3DSprint(file) {
     // Launch 3D Sprint
     const launchTime = new Date();
     console.log(`Launching 3D Sprint at: ${launchTime.toLocaleString()}`);
-    await launch3DSprint(localFilePath); 
+    await launch3DSprint(localFilePath,version); 
     console.log('3D Sprint launched successfully');
   
   } catch (error) {
@@ -966,8 +966,8 @@ async function hideFile(filePath) {
     });
   });
 }
-async function launch3DSprint(localFilePath) {
-  const executablePath = 'C:\\Program Files\\3D Systems\\3D Sprint 5.4.0.1026\\3DSprint.exe';
+async function launch3DSprint(localFilePath, version) {
+  const executablePath = `C:\\Program Files\\3D Systems\\3D Sprint ${version}\\3DSprint.exe`;
   const command = `"${executablePath}" "${localFilePath}"`;
 
   try {
